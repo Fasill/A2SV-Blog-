@@ -32,12 +32,10 @@ const NavBar = () => {
     <nav className='flex items-center justify-between p-4 md:p-[1.6rem] text-[16px] md:text-[20px]'>
       <Image src={assets.logo} alt="Logo" className="w-24 md:w-auto" />
 
-      {/* Hamburger Menu Button for Mobile */}
       <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
         {isMenuOpen ? 'Close' : 'Menu'}
       </button>
 
-      {/* Navigation Links */}
       <div className={`w-full md:flex items-center justify-center ${isMenuOpen ? 'block' : 'hidden'} md:w-full`}>
         <ul className='relative flex flex-col md:flex-row items-center justify-between md:w-[60%] space-y-4 md:space-y-0 mt-4 md:mt-0'>
           {['Home', 'Teams', 'Success Stories', 'About Us', 'Blogs', 'Get Involved'].map((item, index) => (
@@ -59,7 +57,6 @@ const NavBar = () => {
         </ul>
       </div>
 
-      {/* Login and Donate Buttons */}
       <ul className='hidden md:flex items-center justify-between w-[22%] mt-4 md:mt-0'>
         <li className="cursor-pointer">Login</li>
         <li className='bg-[#264FAD] rounded-[10px] h-[59px] w-[160px] text-white flex items-center justify-center cursor-pointer'>

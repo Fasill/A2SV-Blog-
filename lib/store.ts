@@ -1,20 +1,20 @@
 
 import userReducer from './features/userSlice/userSlice';
 
-import { userApi } from './service/UserService';
+import { BlogApi } from './service/BlogService';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,  
    
-    [userApi.reducerPath]: userApi.reducer,
+    [BlogApi.reducerPath]: BlogApi.reducer,
 
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
 
-      userApi.middleware,
+      BlogApi.middleware,
   
     ),
 });
