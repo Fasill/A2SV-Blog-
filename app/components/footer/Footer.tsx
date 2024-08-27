@@ -11,7 +11,7 @@ import {FaYoutube} from "react-icons/fa6";
 const Footer = () => {
   return (
     <div>
-        <div className='flex justify-between items-center  p-[5rem] '>
+        <div className='flex justify-between items-center  p-[5rem] border '>
 
             <div  className='w-[20%]'>
             <Image src={asset.footer} alt="footerIcon" />
