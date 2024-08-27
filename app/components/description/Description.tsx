@@ -8,6 +8,7 @@ import { useGetBlogByIdQuery } from '@/lib/service/BlogService';
 const Description = ({id}:{id:string}) => {
   const {data , isLoading, isError} = useGetBlogByIdQuery({id})
   useEffect(()=>{},[data,isLoading,isError])
+  
   if (isLoading) {
       return <div>Loading...</div>;
     }
