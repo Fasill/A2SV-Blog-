@@ -2,7 +2,7 @@
 import React from 'react'
 import Card from './components/card/Card';
 import { useState } from 'react';
-import Description from "./components/description/Description"
+import Description from './components/description/Description';
 const page = () => {
   const [isCardClicked,setIsCardClicked] = useState<Boolean>(false)
   return (
