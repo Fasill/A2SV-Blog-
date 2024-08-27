@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react'
-
+import Image from 'next/image';
+import assets from "@/assets/index"
 const NavBar = () => {
   const [focusedTab, setFocusedTab] = useState<number>(5)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -28,14 +29,14 @@ const NavBar = () => {
 
   return (
     <nav className='flex items-center justify-between p-4 md:p-[1.6rem] text-[16px] md:text-[20px]'>
-<img src="/assets/nav/logo.svg" alt="Logo" className="w-24 md:w-auto" />
+<Image src={assets.logo} alt="Logo" className="w-24 md:w-auto" />
 
 
 <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
         {isMenuOpen ? 'Close' : 'Menu'}
       </button>
       <div className={`w-full md:w-full md:flex items-center justify-center ${isMenuOpen ? 'block' : 'hidden'} `}>
-        <ul className='relative flex flex-col md:flex-row items-center justify-between md:w-[50%] space-y-4 md:space-y-0 mt-4 md:mt-0'>
+        <ul className='relative flex flex-col md:flex-row items-center justify-between md:w-[60%] space-y-4 md:space-y-0 mt-4 md:mt-0'>
           {['Home', 'Teams', 'Success Stories', 'About Us', 'Blogs', 'Get Involved'].map((item, index) => (
             <li
               key={index}
@@ -54,7 +55,7 @@ const NavBar = () => {
           ></div>
         </ul>
       </div>
-      <ul className='hidden md:flex items-center justify-between w-[17%] mt-4 md:mt-0'>
+      <ul className='hidden md:flex items-center justify-between w-[22%] mt-4 md:mt-0'>
         <li className="cursor-pointer">Login</li>
         <li className='bg-[#264FAD] rounded-[10px] h-[59px] w-[160px] text-white flex items-center justify-center cursor-pointer'>
           Donate

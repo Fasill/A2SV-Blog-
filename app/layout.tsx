@@ -4,6 +4,8 @@ import "./globals.css";
 import { AuthProvider } from "@/providers/AuthProvider";
 import  StoreProvider  from "@/providers/StoreProvider";
 import NavBar from "./components/navBar/NavBar";
+import Footer from "./components/footer/Footer";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,7 +26,7 @@ export default function RootLayout({
           <body className={inter.className}>
             <NavBar/>
             {children}
-
+            <Footer/>
           </body>
         </StoreProvider>
       </AuthProvider>
