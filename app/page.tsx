@@ -1,9 +1,9 @@
-"use client"
-import React, { useEffect } from 'react'
+'use client'
+import React, { useState } from 'react';
 import Card from './components/card/Card';
-import { useState } from 'react';
 import Description from './components/description/Description';
 import { useGetAllBlogQuery } from '@/lib/service/BlogService';
+
 interface CardData {
   _id: string;
   image: string;
@@ -13,52 +13,96 @@ interface CardData {
   isPending: boolean;
   tags: string[];
   likes: number;
-  relatedBlogs: any[]; 
+  relatedBlogs: any[];
   skills: string[];
   createdAt: string;
   updatedAt: string;
 }
-const page = () => {
-  const [isCardClicked,setIsCardClicked] = useState<Boolean>(true)
-  const {data, isLoading, isError} = useGetAllBlogQuery({})
-  const [selectedId,setSelectedId] = useState<string>("")
-  console.log(data)
+
+const Page = () => {
+  const [isCardClicked, setIsCardClicked] = useState<boolean>(true);
+  const [selectedId, setSelectedId] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [cardsPerPage] = useState<number>(5);
+
+  const { data, isLoading, isError } = useGetAllBlogQuery({});
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (isError) {
     return <div>Error occurred while fetching data.</div>;
   }
-  
+
+  // Calculate the index of the first and last card to display
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = data.slice(indexOfFirstCard, indexOfLastCard);
+
+  // Function to handle next button click
+  const handleNext = () => {
+    if (indexOfLastCard < data.length) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  // Function to handle previous button click
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
   return (
     <div>
       {isCardClicked ? (
-        <div className='grid items-center justify-center w-[100lvw] gap-[3rem] '>
-          <div className='w-[100lvw] flex items-center justify-between  p-[1rem] '>
-            <h2 className='text-[32px] font-[600]'>Blogs</h2>
-            <div className='self-center flex gap-[2rem] h-[50px]'>
-              <input placeholder='Search' className='rounded-[100px] pl-[1rem] border-[1px] h-[100%] w-[300px]'/>
-              <button className='text-[16px] font-[600] bg-[#264FAD] rounded-[100px]  p-[0.8rem] text-[white]'>+ New Blog</button>
+        <div className='grid items-center justify-center w-full gap-12'>
+          <div className='w-full flex items-center justify-between p-4'>
+            <h2 className='text-2xl font-bold'>Blogs</h2>
+            <div className='flex gap-8 items-center h-[3rem]'>
+              <input placeholder='Search' className='rounded-full pl-4 border h-full w-72' />
+              <button className='text-base font-semibold bg-[#264FAD] rounded-full p-2 text-white'>+ New Blog</button>
             </div>
             <div>{""}</div>
           </div>
-          <div className='pl-[3rem] pr-[3rem] flex flex-col gap-[1rem]'>
-                {data.map((item: CardData, index: number) => (
-                <div onClick={()=>{setSelectedId(item._id); setIsCardClicked(false)}} id={index.toString()} className="cursor-pointer shadow-md hover:shadow-xl border rounded-[2rem] p-[2rem] ">
-                  <div className='flex  flex-col items-center justify-between'>
-                    <Card id = {item._id} />
+          <div className='flex flex-col gap-4 p-4'>
+            {currentCards.map((item: CardData) => (
+              <div
+                key={item._id}
+                onClick={() => { setSelectedId(item._id); setIsCardClicked(false); }}
+                className="cursor-pointer shadow-md hover:shadow-xl border rounded-2xl p-4"
+              >
+                <div className='flex flex-col items-center justify-between'>
+                  <Card id={item._id} />
                 </div>
               </div>
-                ))}
+            ))}
+          </div>
+          <div className='flex justify-between p-4'>
+            <button
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+              className='bg-[#264FAD] text-white rounded-full px-4 py-2'
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={indexOfLastCard >= data.length}
+              className='bg-[#264FAD] text-white rounded-full px-4 py-2'
+            >
+              Next
+            </button>
           </div>
         </div>
       ) : (
-        <div>
-          <Description id = {selectedId}/>
+        <div className='p-4'>
+          <Description id={selectedId} />
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;
