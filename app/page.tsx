@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Card from './components/card/Card';
 import Description from './components/description/Description';
 import { useGetAllBlogQuery } from '@/lib/service/BlogService';
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
 interface CardData {
   _id: string;
@@ -56,6 +57,7 @@ const Page = () => {
 
   return (
     <div>
+      
       {isCardClicked ? (
         <div className='grid items-center justify-center w-full gap-12'>
           <div className='w-full flex items-center justify-between p-4'>
@@ -98,6 +100,9 @@ const Page = () => {
         </div>
       ) : (
         <div className='p-4'>
+          <div onClick={()=>setIsCardClicked(true)} className=' w-[3rem] text-[#7c7a7a] h-[3rem] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl border cursor-pointer '>
+            <FaArrowLeft />
+          </div>
           <Description id={selectedId} />
         </div>
       )}
