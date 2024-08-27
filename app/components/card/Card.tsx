@@ -2,26 +2,10 @@ import React, { useEffect } from 'react'
 import { useGetBlogByIdQuery } from '@/lib/service/BlogService';
 import Image from 'next/image';
 
-interface CardData {
-    _id: string;
-    image: string;
-    title: string;
-    description: string;
-    author: string | null;
-    isPending: boolean;
-    tags: string[];
-    likes: number;
-    relatedBlogs: any[]; 
-    skills: string[];
-    createdAt: string;
-    updatedAt: string;
-  }
-  
 
 const Card = ({id}:{id:string}) => {
     const {data , isLoading, isError} = useGetBlogByIdQuery({id})
     useEffect(()=>{},[data,isLoading,isError])
-    console.log("myData",data)
     if (isLoading) {
         return <div>Loading...</div>;
       }
@@ -44,12 +28,12 @@ const Card = ({id}:{id:string}) => {
         </div>
                 <div className='flex flex-col'>
                 <div className='flex items-center gap-[1rem]'>
-  <h1 className="text-[24.4px] font-[600]">{data.author?.name || "Yiddita Kebede"}</h1>
-  <p className='text-[19.1px] text-[#868686] font-[500]'>.</p>
-  <p className='text-[19.1px] text-[#868686] font-[500]'>
-    {new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-  </p>
-</div>
+                    <h1 className="text-[24.4px] font-[600]">{data.author?.name || "Yiddita Kebede"}</h1>
+                    <p className='text-[19.1px] text-[#868686] font-[500]'>.</p>
+                    <p className='text-[19.1px] text-[#868686] font-[500]'>
+                        {new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </p>
+                    </div>
 
                     <p className='text-[19.1px] text-[#868686] font-[500]'>SOFTWARE ENGINEERING</p>
                 </div>

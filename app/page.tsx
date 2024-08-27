@@ -13,7 +13,7 @@ interface CardData {
   isPending: boolean;
   tags: string[];
   likes: number;
-  relatedBlogs: any[]; // You might want to define a more specific type for related blogs
+  relatedBlogs: any[]; 
   skills: string[];
   createdAt: string;
   updatedAt: string;
@@ -21,7 +21,7 @@ interface CardData {
 const page = () => {
   const [isCardClicked,setIsCardClicked] = useState<Boolean>(true)
   const {data, isLoading, isError} = useGetAllBlogQuery({})
-  // useEffect(()=>{},[data,isLoading,isError])
+  const [selectedId,setSelectedId] = useState<string>("")
   console.log(data)
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,6 +29,7 @@ const page = () => {
   if (isError) {
     return <div>Error occurred while fetching data.</div>;
   }
+  
   return (
     <div>
       {isCardClicked ? (
@@ -43,7 +44,7 @@ const page = () => {
           </div>
           <div className='pl-[3rem] pr-[3rem] flex flex-col gap-[1rem]'>
                 {data.map((item: CardData, index: number) => (
-                <div id={index.toString()} className="shadow-md hover:shadow-xl border rounded-[2rem] p-[2rem] ">
+                <div onClick={()=>{setSelectedId(item._id); setIsCardClicked(false)}} id={index.toString()} className="cursor-pointer shadow-md hover:shadow-xl border rounded-[2rem] p-[2rem] ">
                   <div className='flex  flex-col items-center justify-between'>
                     <Card id = {item._id} />
                 </div>
@@ -53,7 +54,7 @@ const page = () => {
         </div>
       ) : (
         <div>
-          <Description/>
+          <Description id = {selectedId}/>
         </div>
       )}
     </div>
