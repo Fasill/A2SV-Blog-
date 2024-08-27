@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import assets from "@/assets/index";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const NavBar = () => {
   const [focusedTab, setFocusedTab] = useState<number>(5);
@@ -29,23 +30,23 @@ const NavBar = () => {
   }, [focusedTab]);
 
   return (
-    <nav className='flex items-center justify-between p-4 md:p-[1.6rem] text-[16px] md:text-[20px]'>
+    <nav className='flex items-center justify-between p-4 md:p-6 text-[16px] md:text-[20px] relative'>
       <Image src={assets.logo} alt="Logo" className="w-24 md:w-auto" />
 
       <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        {isMenuOpen ? 'Close' : 'Menu'}
+        {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
 
-      <div className={`w-full md:flex items-center justify-center ${isMenuOpen ? 'block' : 'hidden'} md:w-full`}>
-        <ul className='relative flex flex-col md:flex-row items-center justify-between md:w-[60%] space-y-4 md:space-y-0 mt-4 md:mt-0'>
+      <div className={`w-[50%] fixed top-0 right-0 h-full bg-white shadow-lg z-10 p-6 transition-transform transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} md:relative md:flex md:translate-x-0 md:shadow-none md:bg-transparent md:p-0`}>
+        <ul className='relative flex flex-col md:flex-row items-center justify-between md:w-[90%] space-y-4 md:space-y-0 mt-4 md:mt-0'>
           {['Home', 'Teams', 'Success Stories', 'About Us', 'Blogs', 'Get Involved'].map((item, index) => (
             <li
               key={index}
               ref={(el: HTMLLIElement | null) => {
                 navItemsRef.current[index] = el;
               }}
-              className={`text-[#565656] cursor-pointer ${focusedTab === index + 1 && 'text-[#264FAD]'}`}
-              onClick={() => setFocus(index + 1)}
+              className={`text-[#565656] cursor-pointer ${focusedTab === index  ? 'text-[#264FAD]' : ''}`}
+              onClick={() => { setFocus(index + 1); setIsMenuOpen(false); }}
             >
               {item}
             </li>
@@ -57,7 +58,7 @@ const NavBar = () => {
         </ul>
       </div>
 
-      <ul className='hidden md:flex items-center justify-between w-[22%] mt-4 md:mt-0'>
+      <ul className='hidden md:flex items-center justify-between w-[15%] mt-4 md:mt-0'>
         <li className="cursor-pointer">Login</li>
         <li className='bg-[#264FAD] rounded-[10px] h-[59px] w-[160px] text-white flex items-center justify-center cursor-pointer'>
           Donate
